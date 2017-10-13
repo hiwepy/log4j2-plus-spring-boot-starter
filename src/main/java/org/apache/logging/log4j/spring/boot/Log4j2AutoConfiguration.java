@@ -23,7 +23,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
 
-
 @Configuration
 @ConditionalOnClass({ Logger.class })
 @ConditionalOnProperty(name = { "logging.log4j.enabled" }, havingValue = "true", matchIfMissing = false)
@@ -48,7 +47,7 @@ public class Log4j2AutoConfiguration {
 		if (CollectionUtils.isEmpty(columnConfigList)) {
 			// http://www.cnblogs.com/bigbang92/p/Log4j2.html
 			columnConfigs = new ColumnConfig[] {
-					
+
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_LOGGER").setPattern("%logger")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_THREAD").setPattern("%thread")
@@ -62,7 +61,7 @@ public class Log4j2AutoConfiguration {
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_LINE").setPattern("%line")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
-							
+
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_LEVEL").setPattern("%level")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_MESSAGE").setPattern("%message")// %message
@@ -72,8 +71,8 @@ public class Log4j2AutoConfiguration {
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_TIMESTAMP")
 							.setPattern("%d{yyyy-MM-dd HH:mm:ss.SSS}").setLiteral(null).setEventTimestamp(false)
 							.setUnicode(true).setClob(false).build() };
-			
-			if(properties.isAsync()) {
+
+			if (properties.isAsync()) {
 				ArrayUtils.remove(columnConfigs, 2);
 				ArrayUtils.remove(columnConfigs, 3);
 				ArrayUtils.remove(columnConfigs, 4);
@@ -100,9 +99,10 @@ public class Log4j2AutoConfiguration {
 		// Appender appender = JdbcAppender.createAppender("databaseAppender", "true",
 		// filter, connectionSource, "0", "logs", columnConfigs);
 
-		JdbcAppender appender = JdbcAppender.newBuilder().setBufferSize(properties.getBufferSize())
-				.setColumnMappings(columnMappings).setColumnConfigs(columnConfigs).setConnectionSource(connectionSource)
-				.setTableName(properties.getTableName()).withName(properties.getAppender()).withIgnoreExceptions(true)
+		JdbcAppender appender = JdbcAppender.newBuilder().withName(properties.getAppender()).setConfiguration(config)
+				.setConnectionSource(connectionSource).setTableName(properties.getTableName())
+				.setColumnMappings(columnMappings).setColumnConfigs(columnConfigs)
+				.setBufferSize(properties.getBufferSize()).withIgnoreExceptions(properties.isIgnoreExceptions())
 				.withFilter(filter).build();
 
 		config.addAppender(appender);

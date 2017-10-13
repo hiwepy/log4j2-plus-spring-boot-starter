@@ -20,6 +20,8 @@ public class Log4j2Properties {
 	protected boolean currentContext = false;
 	/** 是否异步记录日志 **/
 	protected boolean async = false;
+	/** 是否忽略异常信息 **/
+	protected boolean ignoreExceptions = true;
 	/** Appender名称 **/
 	protected String appender = "databaseAppender";
 	/** 日志表名称 **/
@@ -61,6 +63,14 @@ public class Log4j2Properties {
 
 	public void setAsync(boolean async) {
 		this.async = async;
+	}
+
+	public boolean isIgnoreExceptions() {
+		return ignoreExceptions;
+	}
+
+	public void setIgnoreExceptions(boolean ignoreExceptions) {
+		this.ignoreExceptions = ignoreExceptions;
 	}
 
 	public String getAppender() {
