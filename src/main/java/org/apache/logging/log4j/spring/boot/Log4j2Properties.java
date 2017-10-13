@@ -26,8 +26,8 @@ public class Log4j2Properties {
 	private List<Log4j2ColumnConfig> columnConfigs = new ArrayList<Log4j2ColumnConfig>();
 	/** 过滤器名称 **/
 	protected String filter = "dblog";
-	/** 日志批量缓冲大小；大于0，则批量提交无效 **/
-	protected int bufferSize = 0;
+	/** 日志批量缓冲大小；小于0，则批量提交无效 **/
+	protected int bufferSize = 10;
 
 	public Boolean getEnabled() {
 		return enabled;
