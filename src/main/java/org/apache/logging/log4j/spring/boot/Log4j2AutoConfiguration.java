@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Filter;
 import org.apache.logging.log4j.core.Logger;
@@ -52,12 +53,16 @@ public class Log4j2AutoConfiguration {
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_THREAD").setPattern("%thread")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
+					/*
+					 * 异步日志记录时无法取到该数据
+					 */
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_CLASS").setPattern("%class")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_FUNCTION").setPattern("%M")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_LINE").setPattern("%line")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
+							
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_LEVEL").setPattern("%level")
 							.setLiteral(null).setEventTimestamp(false).setUnicode(true).setClob(false).build(),
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_MESSAGE").setPattern("%message")// %message
@@ -67,6 +72,12 @@ public class Log4j2AutoConfiguration {
 					ColumnConfig.newBuilder().setConfiguration(config).setName("LOG_TIMESTAMP")
 							.setPattern("%d{yyyy-MM-dd HH:mm:ss.SSS}").setLiteral(null).setEventTimestamp(false)
 							.setUnicode(true).setClob(false).build() };
+			
+			if(properties.isAsync()) {
+				ArrayUtils.remove(columnConfigs, 2);
+				ArrayUtils.remove(columnConfigs, 3);
+				ArrayUtils.remove(columnConfigs, 4);
+			}
 
 		} else {
 

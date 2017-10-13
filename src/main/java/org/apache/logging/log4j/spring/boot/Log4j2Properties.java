@@ -18,6 +18,8 @@ public class Log4j2Properties {
 	protected String logger = "JDBC-Logger";
 	/** 是否当前上下文 **/
 	protected boolean currentContext = false;
+	/** 是否异步记录日志 **/
+	protected boolean async = false;
 	/** Appender名称 **/
 	protected String appender = "databaseAppender";
 	/** 日志表名称 **/
@@ -51,6 +53,14 @@ public class Log4j2Properties {
 
 	public void setCurrentContext(boolean currentContext) {
 		this.currentContext = currentContext;
+	}
+
+	public boolean isAsync() {
+		return async;
+	}
+
+	public void setAsync(boolean async) {
+		this.async = async;
 	}
 
 	public String getAppender() {
