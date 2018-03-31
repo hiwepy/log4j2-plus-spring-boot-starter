@@ -1,6 +1,6 @@
 package org.apache.logging.log4j.spring.boot;
 
-public class Log4j2ColumnConfig {
+public class Log4j2ColumnMapping {
 
 	private String column;
 	private String pattern;

@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(Log4j2Properties.PREFIX)
 public class Log4j2Properties {
 
-	public static final String PREFIX = "logging.log4j";
+	public static final String PREFIX = "logging.log4j.jdbc";
 
 	/** 是否启用 **/
 	protected Boolean enabled = false;
@@ -27,7 +27,7 @@ public class Log4j2Properties {
 	/** 日志表名称 **/
 	protected String tableName = "LOG4j_BIZ";
 	/** 数据库列与表达式对应关系 **/
-	private List<Log4j2ColumnConfig> columnConfigs = new ArrayList<Log4j2ColumnConfig>();
+	private List<Log4j2ColumnMapping> columnMappings = new ArrayList<Log4j2ColumnMapping>();
 	/** 过滤器名称 **/
 	protected String filter = "dblog";
 	/** 日志批量缓冲大小；小于0，则批量提交无效 **/
@@ -89,12 +89,12 @@ public class Log4j2Properties {
 		this.tableName = tableName;
 	}
 
-	public List<Log4j2ColumnConfig> getColumnConfigs() {
-		return columnConfigs;
+	public List<Log4j2ColumnMapping> getColumnMappings() {
+		return columnMappings;
 	}
 
-	public void setColumnConfigs(List<Log4j2ColumnConfig> columnConfigs) {
-		this.columnConfigs = columnConfigs;
+	public void setColumnMappings(List<Log4j2ColumnMapping> columnMappings) {
+		this.columnMappings = columnMappings;
 	}
 
 	public String getFilter() {

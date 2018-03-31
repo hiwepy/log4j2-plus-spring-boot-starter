@@ -1,5 +1,10 @@
 logging:
   log4j:
-    column-configs:
-    - clob: false
-      column: 
+    jdbc:
+      column-configs:
+      - clob: false
+        column: LOG_ID
+        pattern: "%X{key}"
+      - column: xxx
+        pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS}"
+        

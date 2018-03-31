@@ -118,6 +118,11 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		
   		<!--Log4j 2 包含了基于LMAX 分离库的下一代的异步日志系统，在多线程环境下，异步日志系统比 Log4j 1.x 和Logback 提高了10倍性能提升（吞吐量和延迟率 ）-->  
         <dependency>  
             <groupId>org.apache.logging.log4j</groupId>  

@@ -25,7 +25,7 @@ import org.springframework.util.CollectionUtils;
 
 @Configuration
 @ConditionalOnClass({ Logger.class })
-@ConditionalOnProperty(name = { "logging.log4j.enabled" }, havingValue = "true", matchIfMissing = false)
+@ConditionalOnProperty(name = { "logging.log4j.jdbc.enabled" }, havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties({ Log4j2Properties.class })
 public class Log4j2AutoConfiguration {
 
@@ -41,10 +41,10 @@ public class Log4j2AutoConfiguration {
 		final org.apache.logging.log4j.core.config.Configuration config = ctx.getConfiguration();
 		final Logger interLogger = ctx.getLogger(properties.getLogger()); // 需要写日志到数据库的包名
 
-		List<Log4j2ColumnConfig> columnConfigList = properties.getColumnConfigs();
+		List<Log4j2ColumnMapping> columnMappingList = properties.getColumnMappings();
 		ColumnMapping[] columnMappings = {};
 		ColumnConfig[] columnConfigs = null;
-		if (CollectionUtils.isEmpty(columnConfigList)) {
+		if (CollectionUtils.isEmpty(columnMappingList)) {
 			// http://www.cnblogs.com/bigbang92/p/Log4j2.html
 			columnConfigs = new ColumnConfig[] {
 
@@ -80,9 +80,9 @@ public class Log4j2AutoConfiguration {
 
 		} else {
 
-			columnConfigs = new ColumnConfig[columnConfigList.size()];
-			for (int i = 0; i < columnConfigList.size(); i++) {
-				Log4j2ColumnConfig column = columnConfigList.get(i);
+			columnConfigs = new ColumnConfig[columnMappingList.size()];
+			for (int i = 0; i < columnMappingList.size(); i++) {
+				Log4j2ColumnMapping column = columnMappingList.get(i);
 				columnConfigs[i] = ColumnConfig.newBuilder().setConfiguration(config).setName(column.getColumn())
 						.setPattern(column.getPattern()).setLiteral(column.getLiteralValue())
 						.setEventTimestamp(column.isEventTimestamp()).setUnicode(column.isUnicode())
