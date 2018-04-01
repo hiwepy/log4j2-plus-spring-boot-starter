@@ -27,6 +27,12 @@ import org.springframework.util.CollectionUtils;
 @ConditionalOnClass({ Logger.class })
 @ConditionalOnProperty(name = { "logging.log4j.jdbc.enabled" }, havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties({ Log4j2Properties.class })
+/**
+ * 
+ * @author Administrator
+ * @see http://www.cnblogs.com/bigbang92/p/Log4j2.html
+ * @see 
+ */
 public class Log4j2AutoConfiguration {
 
 	@Bean

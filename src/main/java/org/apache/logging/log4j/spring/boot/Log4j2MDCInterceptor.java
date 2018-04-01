@@ -12,7 +12,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author vindell
+ * 
+ * TODO
+ * @author <a href="https://github.com/vindell">vindell</a>
  * @see http://logging.apache.org/log4j/2.x/manual/thread-context.html
  */
 public class Log4j2MDCInterceptor implements HandlerInterceptor {

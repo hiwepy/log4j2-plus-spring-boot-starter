@@ -1,10 +1,23 @@
 logging:
   log4j:
     jdbc:
-      column-configs:
-      - clob: false
-        column: LOG_ID
-        pattern: "%X{key}"
-      - column: xxx
+      enabled: true
+      table-name: TB_LOG_BIZ
+      column-mappings:
+      - column: LOG_TIME
         pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS}"
+      - column: LOG_LEVEL
+        pattern: "%level"
+      - column: level
+        pattern: "%level"
+      - column: requestURL
+        pattern: "%X{requestURL}"
+      - column: requestURL
+        pattern: "%X{requestURL}"
+      - column: requestURL
+        pattern: "%X{requestURL}"
+      - column: message
+        pattern: "%message"
+      - column: exception
+        pattern: "%ex{full}"
         
