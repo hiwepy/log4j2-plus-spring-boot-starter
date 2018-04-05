@@ -1,4 +1,4 @@
-package org.apache.logging.log4j.spring.boot;
+package org.apache.logging.log4j.spring.boot.ext.web;
 
 import java.util.Enumeration;
 import java.util.UUID;
@@ -12,8 +12,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * 
- * TODO
+ * 用于添加请求参数到 {@link ThreadContext} 中，可使用 %X{}获取指定的值，如 %X{uuid}
  * @author <a href="https://github.com/vindell">vindell</a>
  * @see http://logging.apache.org/log4j/2.x/manual/thread-context.html
  */

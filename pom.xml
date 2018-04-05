@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>com.github.vindell</groupId>
-	<artifactId>spring-boot-starter-log4j2</artifactId>
+	<artifactId>spring-boot-starter-log4j2-biz</artifactId>
 	<description>Spring Boot Starter For Log4j 2.x</description>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>${project.groupId}:${project.artifactId}</name>
@@ -365,8 +365,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<commons-logging.version>1.2</commons-logging.version>
-		<disruptor.version>3.3.6</disruptor.version>
-		<log4j2.version>2.9.1</log4j2.version><!-- 2.4.x~2.9.x(JDK 1.7), 2.3.x(JDK 1.6)-->
+		<disruptor.version>3.4.1</disruptor.version>
+		<log4j2.version>2.11.0</log4j2.version><!-- 2.4.x~2.9.x(JDK 1.7), 2.3.x(JDK 1.6)-->
 		<maven.version>3.0</maven.version>
        	<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
@@ -374,7 +374,6 @@
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <maven-surefire-plugin.vertsion>2.21.0</maven-surefire-plugin.vertsion>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
-		<slf4j.version>1.7.25</slf4j.version>
 	</properties>
 
 	<dependencies>
@@ -385,18 +384,12 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<optional>true</optional>
 		</dependency>
-
-		<!-- Core starter, including auto-configuration support, logging and YAML -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<optional>true</optional>
 		</dependency>
+		
 		<!-- Spring Boot Test 依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -415,8 +408,6 @@
 			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 		
-		<!-- ######################日志组件工具包###################### -->
-		
 		<!-- 
 			实现各个日志组件之间的桥接并最终输出到log4j2 ：
 			
@@ -432,28 +423,11 @@
 				    log4j
 		-->
 		
-		<!--
-			Jakarta Commons Logging (JCL) 提供的是一个日志 (Log) 接口 (interface)
-			，同时兼顾轻量级和不依赖于具体的日志实现工具 。 它提供给中间件 /
-			日志工具开发者一个简单的日志操作抽象，允许程序开发人员使用不同的具体日志实现工具。用户被假定已熟悉某种日志实现工具的更高级别的细节。
-			JCL 提供的接口，对其它一些日志工具，包括 Log4J, Avalon LogKit, and JDK 1.4
-			等，进行了简单的包装，此接口更接近于 Log4J 和 LogKit 的实现。
-		-->
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>${commons-logging.version}</version>
-		</dependency>
 		<!-- SLF4J，即简单日志门面（Sample Logging Facade for Java），不是具体的日志解决方案，它只服务于各种各样
 			 的日志系统。按照官方的说法，SLF4J是一个用于日志系统的简单Facade，允许最终用户在部署其应用时使用其所希望的日志系统。 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 		
   		<!--Log4j 2 包含了基于LMAX 分离库的下一代的异步日志系统，在多线程环境下，异步日志系统比 Log4j 1.x 和Logback 提高了10倍性能提升（吞吐量和延迟率 ）-->  
@@ -486,41 +460,17 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-web</artifactId>
 		</dependency>
-		
-		<!-- The Apache Log4j Tag Library for Web Applications    -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
+		<!-- 解析到log4j2.yml文件需要这个依赖 -->
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-taglib</artifactId>
-			<optional>true</optional>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-yaml</artifactId>
 		</dependency>
-		<!-- The Apache Log4j streams to log event converters    -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-iostreams</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!-- NoSQL appenders for Log4j. These include appenders to databases such as MongoDB, Apache CouchDB, and Apache Cassandra.  -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-nosql</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!-- The Apache Log4j Flume Appender  -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-flume-ng</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!-- Disruptor它是一个开源的并发框架,并获得2011 Duke’s 程序框架创新奖,能够在无锁的情况下实现网络的Queue并发操作。 -->
+		<!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
 		<dependency>
 		    <groupId>com.lmax</groupId>
 		    <artifactId>disruptor</artifactId>
 		    <version>${disruptor.version}</version>
-		</dependency>
-		<!-- 加上这个才能辨认到log4j2.yml文件 -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.dataformat</groupId>
-			<artifactId>jackson-dataformat-yaml</artifactId>
 		</dependency>
 	</dependencies>
 
