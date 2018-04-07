@@ -18,25 +18,32 @@
  */
 package org.apache.logging.log4j.spring.boot.ext;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import javax.sql.DataSource;
 
 /**
- * Qualifier annotation for a DataSource to be injected in to Log4j. If used for a second
- * data source, the other (main) one would normally be marked as {@code @Primary}.
- *
+ * TODO
  * @author <a href="https://github.com/vindell">vindell</a>
  */
-@Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE,
-		ElementType.ANNOTATION_TYPE })
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Qualifier
-public @interface Log4jDataSource {
+public class Log4jJdbcConnectionFactory {
+
+	private static interface Singleton {
+		final Log4jJdbcConnectionFactory INSTANCE = new Log4jJdbcConnectionFactory();
+	}
+
+	private DataSource dataSource;
+
+	private Log4jJdbcConnectionFactory() {
+	}
+
+	public static void setDataSource(DataSource dataSource) throws SQLException {
+		Singleton.INSTANCE.dataSource = dataSource;
+	}
+
+	public static Connection getDatabaseConnection() throws SQLException {
+		return Singleton.INSTANCE.dataSource.getConnection();
+	}
 	
 }
