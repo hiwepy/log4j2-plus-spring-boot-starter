@@ -65,12 +65,12 @@ public class Log4jJdbcAutoConfiguration {
 			Log4jJdbcAppenderTemplate template = new Log4jJdbcAppenderTemplate();
 			if (this.properties.isCreateDataSource()) {
 				template.setDataSource(properties.initializeDataSourceBuilder().build());
-			} else if (this.dataSourceProperties != null) {
-				template.setDataSource(this.dataSourceProperties.initializeDataSourceBuilder().build());
 			} else if (this.flywayDataSource != null) {
 				template.setDataSource(this.flywayDataSource);
-			} else {
+			} else if (this.dataSource != null) {
 				template.setDataSource(this.dataSource);
+			} else if (this.dataSourceProperties != null) {
+				template.setDataSource(this.dataSourceProperties.initializeDataSourceBuilder().build());
 			}
 			template.setProperties(properties);
 			return template;
