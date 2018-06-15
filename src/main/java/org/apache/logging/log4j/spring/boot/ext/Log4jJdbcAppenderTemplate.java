@@ -78,7 +78,7 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 		
 		List<Log4jJdbcColumnConfig> columnMappingList = properties.getColumnMappings();
 		
-		ColumnMapping[] columnMappings = {};
+		ColumnMapping[] columnMappings = new ColumnMapping[0];
 		ColumnConfig[] columnConfigs = new ColumnConfig[columnMappingList.size()];
 		for (int i = 0; i < columnMappingList.size(); i++) {
 			Log4jJdbcColumnConfig column = columnMappingList.get(i);

@@ -3,6 +3,7 @@ package org.apache.logging.log4j.spring.boot;
 import javax.sql.DataSource;
 
 import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.spring.boot.ext.Log4jDataSource;
 import org.apache.logging.log4j.spring.boot.ext.Log4jJdbcAppenderTemplate;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -10,8 +11,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
-import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
@@ -46,17 +45,16 @@ public class Log4jJdbcAutoConfiguration {
 
 		private final DataSource dataSource;
 
-		private final DataSource flywayDataSource;
+		private final DataSource log4jDataSource;
 
 		public Log4jJdbcConfiguration(Log4jJdbcProperties properties, 
 				DataSourceProperties dataSourceProperties,
 				ResourceLoader resourceLoader, ObjectProvider<DataSource> dataSource,
-				@FlywayDataSource ObjectProvider<DataSource> flywayDataSource,
-				ObjectProvider<FlywayMigrationStrategy> migrationStrategy) {
+				@Log4jDataSource ObjectProvider<DataSource> log4jDataSource) {
 			this.properties = properties;
 			this.dataSourceProperties = dataSourceProperties;
 			this.dataSource = dataSource.getIfUnique();
-			this.flywayDataSource = flywayDataSource.getIfAvailable();
+			this.log4jDataSource = log4jDataSource.getIfAvailable();
 		}
 		
 		@Bean
@@ -65,8 +63,8 @@ public class Log4jJdbcAutoConfiguration {
 			Log4jJdbcAppenderTemplate template = new Log4jJdbcAppenderTemplate();
 			if (this.properties.isCreateDataSource()) {
 				template.setDataSource(properties.initializeDataSourceBuilder().build());
-			} else if (this.flywayDataSource != null) {
-				template.setDataSource(this.flywayDataSource);
+			} else if (this.log4jDataSource != null) {
+				template.setDataSource(this.log4jDataSource);
 			} else if (this.dataSource != null) {
 				template.setDataSource(this.dataSource);
 			} else if (this.dataSourceProperties != null) {
