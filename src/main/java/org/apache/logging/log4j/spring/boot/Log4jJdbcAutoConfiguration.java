@@ -21,10 +21,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
 
 /**
- * 
- * @author Administrator
- * @see http://www.cnblogs.com/bigbang92/p/Log4j2.html
- * @see
+ * Log4j基于JDBC存储日志的配置类
+ * http://www.cnblogs.com/bigbang92/p/Log4j2.html
+ * @author 		： <a href="https://github.com/vindell">vindell</a>
  */
 @Configuration
 @ConditionalOnClass({ Logger.class })

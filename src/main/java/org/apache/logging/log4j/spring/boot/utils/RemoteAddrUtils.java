@@ -18,8 +18,9 @@ public class RemoteAddrUtils {
 	
 	/**
 	 * 获取请求客户端IP地址，支持代理服务器
-	 * @param request
-	 * @return
+	 * @author 		： <a href="https://github.com/vindell">vindell</a>
+	 * @param request {@link HttpServletRequest}
+	 * @return IP地址
 	 */
 	public static String getRemoteAddr(HttpServletRequest request) {
 		
