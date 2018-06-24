@@ -11,7 +11,7 @@
 	</parent>
 
 	<groupId>com.github.vindell</groupId>
-	<artifactId>spring-boot-starter-log4j2-biz</artifactId>
+	<artifactId>spring-boot-starter-log4j2-plus</artifactId>
 	<description>Spring Boot Starter For Log4j 2.x</description>
 	<version>1.0.0.RELEASE</version>
 	<name>${project.groupId}:${project.artifactId}</name>

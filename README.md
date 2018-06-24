@@ -1,4 +1,4 @@
-# spring-boot-starter-log4j2
+# spring-boot-starter-log4j2-plus
 log4j2 jdbc starter for spring boot 
 
 ### 说明
@@ -13,7 +13,7 @@ log4j2 jdbc starter for spring boot
 ``` xml
 <dependency>
 	<groupId>${project.groupId}</groupId>
-	<artifactId>spring-boot-starter-log4j2</artifactId>
+	<artifactId>spring-boot-starter-log4j2-plus</artifactId>
 	<version>${project.version}</version>
 </dependency>
 ```
