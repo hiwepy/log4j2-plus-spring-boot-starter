@@ -365,8 +365,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<commons-logging.version>1.2</commons-logging.version>
-		<disruptor.version>3.4.1</disruptor.version>
-		<log4j2.version>2.11.1</log4j2.version><!-- 2.4.x~2.9.x(JDK 1.7), 2.3.x(JDK 1.6)-->
+		<disruptor.version>3.4.2</disruptor.version>
+		<log4j2.version>2.11.1</log4j2.version>
 		<maven.version>3.0</maven.version>
        	<maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
@@ -430,11 +430,6 @@
 			<artifactId>slf4j-api</artifactId>
 		</dependency>
 		
-  		<!--Log4j 2 包含了基于LMAX 分离库的下一代的异步日志系统，在多线程环境下，异步日志系统比 Log4j 1.x 和Logback 提高了10倍性能提升（吞吐量和延迟率 ）-->  
-        <dependency>  
-            <groupId>org.apache.logging.log4j</groupId>  
-            <artifactId>log4j-api</artifactId>  
-        </dependency>
         <!-- The Apache Log4j Implementation  -->
         <dependency>  
             <groupId>org.apache.logging.log4j</groupId>  
@@ -455,11 +450,7 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-jul</artifactId>
 		</dependency>
-		<!-- The Apache Log4j support for web servlet containers   -->
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-web</artifactId>
-		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
 		<!-- 解析到log4j2.yml文件需要这个依赖 -->
 		<dependency>
