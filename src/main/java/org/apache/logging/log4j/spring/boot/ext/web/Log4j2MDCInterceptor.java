@@ -30,7 +30,19 @@ public class Log4j2MDCInterceptor implements HandlerInterceptor {
 		ThreadContext.put("remotePort", String.valueOf(request.getRemotePort()));
 		ThreadContext.put("localAddr", request.getLocalAddr());
 		ThreadContext.put("localName", request.getLocalName());
-
+		
+		Enumeration<String> names = request.getHeaderNames();
+		while (names.hasMoreElements()) {
+			String key = names.nextElement();
+			ThreadContext.put("header." + key, request.getHeader(key));
+		}
+		
+		Enumeration<String> params = request.getParameterNames();
+		while (params.hasMoreElements()) {
+			String key = params.nextElement();
+			ThreadContext.put("param." + key, request.getParameter(key));
+		}
+		
 		Enumeration<?> enu = request.getSession().getAttributeNames();
 		while (enu.hasMoreElements()) {
 			String key = (String) enu.nextElement();
