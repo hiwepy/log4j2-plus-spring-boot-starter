@@ -14,7 +14,7 @@ log4j2 jdbc starter for spring boot
 <dependency>
 	<groupId>${project.groupId}</groupId>
 	<artifactId>spring-boot-starter-log4j2-plus</artifactId>
-	<version>${project.version}</version>
+	<version>1.0.2.RELEASE</version>
 </dependency>
 ```
 
