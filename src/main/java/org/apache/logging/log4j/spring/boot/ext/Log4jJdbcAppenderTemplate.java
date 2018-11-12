@@ -63,6 +63,31 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 		this.jdbcProperties = jdbcProperties;
 	}
 	
+	public Log4jJdbcAppenderTemplate() {
+
+		List<Log4jJdbcAppenderProperties> jdbcAppenders = jdbcProperties.getAppenders();
+		Assert.notEmpty(jdbcAppenders, "Need to specify at least one JdbcAppender Properties.");
+		
+		final LoggerContext ctx = (LoggerContext) LogManager.getContext(jdbcProperties.isCurrentContext());
+		final org.apache.logging.log4j.core.config.Configuration config = ctx.getConfiguration();
+		
+		for (Log4jJdbcAppenderProperties properties : jdbcAppenders) {
+			
+			if (CollectionUtils.isEmpty(properties.getColumnMappings())) {
+				continue;
+			}
+			
+			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : Markers.JDBC_LOGGER_NAME);
+			JdbcAppender appender = this.newJdbcAppender(config, properties);
+
+			config.addAppender(appender);
+			interLogger.addAppender(appender);
+			appender.start();
+			ctx.updateLoggers();
+		}
+		
+	}
+	
 	public JdbcAppender newJdbcAppender(final org.apache.logging.log4j.core.config.Configuration config, Log4jJdbcAppenderProperties properties) {
 		
 		List<Log4jJdbcColumnConfig> columnMappingList = properties.getColumnMappings();
@@ -97,37 +122,10 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 		return appender;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-	 */
+	 
 	@Override
 	public void afterPropertiesSet() throws Exception {
 
-		List<Log4jJdbcAppenderProperties> jdbcAppenders = jdbcProperties.getAppenders();
-		Assert.notEmpty(jdbcAppenders, "Need to specify at least one JdbcAppender Properties.");
-		
-		final LoggerContext ctx = (LoggerContext) LogManager.getContext(jdbcProperties.isCurrentContext());
-		final org.apache.logging.log4j.core.config.Configuration config = ctx.getConfiguration();
-		
-		for (Log4jJdbcAppenderProperties properties : jdbcAppenders) {
-			
-			if (CollectionUtils.isEmpty(properties.getColumnMappings())) {
-				continue;
-			}
-			
-			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : Markers.JDBC_LOGGER_NAME);
-			JdbcAppender appender = this.newJdbcAppender(config, properties);
-
-			config.addAppender(appender);
-			interLogger.addAppender(appender);
-			
-			appender.start();
-			
-		}
-		
-		ctx.updateLoggers();
 		
 	}
 
