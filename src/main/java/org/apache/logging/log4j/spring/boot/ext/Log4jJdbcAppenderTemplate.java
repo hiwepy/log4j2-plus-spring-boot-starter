@@ -64,27 +64,6 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 	}
 	
 	public Log4jJdbcAppenderTemplate() {
-
-		List<Log4jJdbcAppenderProperties> jdbcAppenders = jdbcProperties.getAppenders();
-		Assert.notEmpty(jdbcAppenders, "Need to specify at least one JdbcAppender Properties.");
-		
-		final LoggerContext ctx = (LoggerContext) LogManager.getContext(jdbcProperties.isCurrentContext());
-		final org.apache.logging.log4j.core.config.Configuration config = ctx.getConfiguration();
-		
-		for (Log4jJdbcAppenderProperties properties : jdbcAppenders) {
-			
-			if (CollectionUtils.isEmpty(properties.getColumnMappings())) {
-				continue;
-			}
-			
-			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : Markers.JDBC_LOGGER_NAME);
-			JdbcAppender appender = this.newJdbcAppender(config, properties);
-
-			config.addAppender(appender);
-			interLogger.addAppender(appender);
-			appender.start();
-			ctx.updateLoggers();
-		}
 		
 	}
 	
@@ -126,6 +105,26 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 
+		List<Log4jJdbcAppenderProperties> jdbcAppenders = jdbcProperties.getAppenders();
+		Assert.notEmpty(jdbcAppenders, "Need to specify at least one JdbcAppender Properties.");
+		
+		final LoggerContext ctx = (LoggerContext) LogManager.getContext(jdbcProperties.isCurrentContext());
+		final org.apache.logging.log4j.core.config.Configuration config = ctx.getConfiguration();
+		
+		for (Log4jJdbcAppenderProperties properties : jdbcAppenders) {
+			
+			if (CollectionUtils.isEmpty(properties.getColumnMappings())) {
+				continue;
+			}
+			
+			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : Markers.JDBC_LOGGER_NAME);
+			JdbcAppender appender = this.newJdbcAppender(config, properties);
+
+			config.addAppender(appender);
+			interLogger.addAppender(appender);
+			appender.start();
+			ctx.updateLoggers();
+		}
 		
 	}
 
