@@ -32,7 +32,6 @@ import org.apache.logging.log4j.core.appender.db.jdbc.ConnectionSource;
 import org.apache.logging.log4j.core.appender.db.jdbc.JdbcAppender;
 import org.apache.logging.log4j.core.filter.MarkerFilter;
 import org.apache.logging.log4j.spring.boot.Log4jJdbcProperties;
-import org.apache.logging.log4j.spring.boot.Markers;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
@@ -117,7 +116,7 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 				continue;
 			}
 			
-			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : Markers.JDBC_LOGGER_NAME);
+			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : properties.getMarker());
 			JdbcAppender appender = this.newJdbcAppender(config, properties);
 
 			config.addAppender(appender);

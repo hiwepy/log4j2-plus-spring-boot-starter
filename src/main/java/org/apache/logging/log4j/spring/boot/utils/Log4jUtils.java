@@ -1,6 +1,5 @@
 package org.apache.logging.log4j.spring.boot.utils;
 
-import org.apache.logging.log4j.spring.boot.Markers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
@@ -11,10 +10,6 @@ public class Log4jUtils {
 
 	private Log4jUtils(String loggerName) {
 		logger = LoggerFactory.getLogger(loggerName);
-	}
-	
-	public static Log4jUtils instance() {
-		return new Log4jUtils(Markers.JDBC_LOGGER_NAME);
 	}
 	
 	public static Log4jUtils instance(String loggerName) {
