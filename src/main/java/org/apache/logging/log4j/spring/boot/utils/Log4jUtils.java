@@ -1,22 +1,24 @@
 package org.apache.logging.log4j.spring.boot.utils;
 
+import org.apache.logging.log4j.spring.boot.Markers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
 public class Log4jUtils {
 
-	private static Logger LOG;
+	private Logger logger;
 
-	static {
-		
-		String loggerName = String.valueOf(System.getProperty("loggerName"));
-		if (null == loggerName || "null".equals(loggerName)) {
-			LOG = LoggerFactory.getLogger("JDBC-Logger");
-		} else {
-			LOG = LoggerFactory.getLogger(loggerName);
-		}
-		
+	private Log4jUtils(String loggerName) {
+		logger = LoggerFactory.getLogger(loggerName);
+	}
+	
+	public static Log4jUtils instance() {
+		return new Log4jUtils(Markers.JDBC_LOGGER_NAME);
+	}
+	
+	public static Log4jUtils instance(String loggerName) {
+		return new Log4jUtils(loggerName);
 	}
 	
 	 /**
@@ -26,8 +28,8 @@ public class Log4jUtils {
      *         false otherwise.
      * @since 1.4
      */
-    public static boolean isTraceEnabled(){
-    	return LOG.isTraceEnabled();
+    public boolean isTraceEnabled(){
+    	return logger.isTraceEnabled();
     }
 
     /**
@@ -36,8 +38,8 @@ public class Log4jUtils {
      * @param msg the message string to be logged
      * @since 1.4
      */
-    public static void trace(String msg){
-    	LOG.trace(msg);
+    public void trace(String msg){
+    	logger.trace(msg);
     }
 
     /**
@@ -52,8 +54,8 @@ public class Log4jUtils {
      * @param arg    the argument
      * @since 1.4
      */
-    public static void trace(String format, Object arg){
-    	LOG.trace(format, arg);
+    public void trace(String format, Object arg){
+    	logger.trace(format, arg);
     }
 
     /**
@@ -69,8 +71,8 @@ public class Log4jUtils {
      * @param arg2   the second argument
      * @since 1.4
      */
-    public static void trace(String format, Object arg1, Object arg2){
-    	LOG.trace(format, arg1, arg2);
+    public void trace(String format, Object arg1, Object arg2){
+    	logger.trace(format, arg1, arg2);
     }
 
     /**
@@ -88,8 +90,8 @@ public class Log4jUtils {
      * @param arguments a list of 3 or more arguments
      * @since 1.4
      */
-    public static void trace(String format, Object... arguments){
-    	LOG.trace(format, arguments);
+    public void trace(String format, Object... arguments){
+    	logger.trace(format, arguments);
     }
 
     /**
@@ -100,8 +102,8 @@ public class Log4jUtils {
      * @param t   the exception (throwable) to log
      * @since 1.4
      */
-    public static void trace(String msg, Throwable t){
-    	LOG.trace(msg, t);
+    public void trace(String msg, Throwable t){
+    	logger.trace(msg, t);
     }
 
     /**
@@ -114,8 +116,8 @@ public class Log4jUtils {
      *         
      * @since 1.4
      */
-    public static boolean isTraceEnabled(Marker marker){
-    	return LOG.isTraceEnabled(marker);
+    public boolean isTraceEnabled(Marker marker){
+    	return logger.isTraceEnabled(marker);
     }
 
     /**
@@ -125,8 +127,8 @@ public class Log4jUtils {
      * @param msg    the message string to be logged
      * @since 1.4
      */
-    public static void trace(Marker marker, String msg){
-    	LOG.trace(marker, msg);
+    public void trace(Marker marker, String msg){
+    	logger.trace(marker, msg);
     }
 
     /**
@@ -138,8 +140,8 @@ public class Log4jUtils {
      * @param arg    the argument
      * @since 1.4
      */
-    public static void trace(Marker marker, String format, Object arg){
-    	LOG.trace(marker, format, arg);
+    public void trace(Marker marker, String format, Object arg){
+    	logger.trace(marker, format, arg);
     }
 
     /**
@@ -153,8 +155,8 @@ public class Log4jUtils {
      * @param arg2   the second argument
      * @since 1.4
      */
-    public static void trace(Marker marker, String format, Object arg1, Object arg2){
-    	LOG.trace(marker, format, arg1, arg2);
+    public void trace(Marker marker, String format, Object arg1, Object arg2){
+    	logger.trace(marker, format, arg1, arg2);
     }
 
     /**
@@ -167,8 +169,8 @@ public class Log4jUtils {
      * @param argArray an array of arguments
      * @since 1.4
      */
-    public static void trace(Marker marker, String format, Object... argArray){
-    	LOG.trace(marker, format, argArray);
+    public void trace(Marker marker, String format, Object... argArray){
+    	logger.trace(marker, format, argArray);
     }
 
     /**
@@ -180,8 +182,8 @@ public class Log4jUtils {
      * @param t      the exception (throwable) to log
      * @since 1.4
      */
-    public static void trace(Marker marker, String msg, Throwable t){
-    	LOG.trace(marker, msg, t);
+    public void trace(Marker marker, String msg, Throwable t){
+    	logger.trace(marker, msg, t);
     }
 
     /**
@@ -190,8 +192,8 @@ public class Log4jUtils {
      * @return True if this Logger is enabled for the DEBUG level,
      *         false otherwise.
      */
-    public static boolean isDebugEnabled(){
-    	return LOG.isDebugEnabled();
+    public boolean isDebugEnabled(){
+    	return logger.isDebugEnabled();
     }
 
     /**
@@ -199,8 +201,8 @@ public class Log4jUtils {
      *
      * @param msg the message string to be logged
      */
-    public static void debug(String msg){
-    	LOG.debug(msg);
+    public void debug(String msg){
+    	logger.debug(msg);
     }
 
     /**
@@ -214,8 +216,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void debug(String format, Object arg){
-    	LOG.debug(format, arg);
+    public void debug(String format, Object arg){
+    	logger.debug(format, arg);
     }
 
     /**
@@ -230,8 +232,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void debug(String format, Object arg1, Object arg2){
-    	LOG.debug(format, arg1, arg2);
+    public void debug(String format, Object arg1, Object arg2){
+    	logger.debug(format, arg1, arg2);
     }
 
     /**
@@ -249,8 +251,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void debug(String format, Object... arguments){
-    	LOG.debug(format, arguments);
+    public void debug(String format, Object... arguments){
+    	logger.debug(format, arguments);
     }
 
     /**
@@ -260,8 +262,8 @@ public class Log4jUtils {
      * @param msg the message accompanying the exception
      * @param t   the exception (throwable) to log
      */
-    public static void debug(String msg, Throwable t){
-    	LOG.debug(msg, t);
+    public void debug(String msg, Throwable t){
+    	logger.debug(msg, t);
     }
 
     /**
@@ -272,8 +274,8 @@ public class Log4jUtils {
      * @return True if this Logger is enabled for the DEBUG level,
      *         false otherwise. 
      */
-    public static boolean isDebugEnabled(Marker marker){
-    	return LOG.isDebugEnabled(marker);
+    public boolean isDebugEnabled(Marker marker){
+    	return logger.isDebugEnabled(marker);
     }
 
     /**
@@ -282,8 +284,8 @@ public class Log4jUtils {
      * @param marker the marker data specific to this log statement
      * @param msg    the message string to be logged
      */
-    public static void debug(Marker marker, String msg){
-    	LOG.debug(marker, msg);
+    public void debug(Marker marker, String msg){
+    	logger.debug(marker, msg);
     }
 
     /**
@@ -294,8 +296,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void debug(Marker marker, String format, Object arg){
-    	LOG.debug(marker, format, arg);
+    public void debug(Marker marker, String format, Object arg){
+    	logger.debug(marker, format, arg);
     }
 
     /**
@@ -308,8 +310,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void debug(Marker marker, String format, Object arg1, Object arg2){
-    	LOG.debug(marker, format, arg1, arg2);
+    public void debug(Marker marker, String format, Object arg1, Object arg2){
+    	logger.debug(marker, format, arg1, arg2);
     }
 
     /**
@@ -321,8 +323,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void debug(Marker marker, String format, Object... arguments){
-    	LOG.debug(marker, format, arguments);
+    public void debug(Marker marker, String format, Object... arguments){
+    	logger.debug(marker, format, arguments);
     }
 
     /**
@@ -333,8 +335,8 @@ public class Log4jUtils {
      * @param msg    the message accompanying the exception
      * @param t      the exception (throwable) to log
      */
-    public static void debug(Marker marker, String msg, Throwable t){
-    	LOG.debug(marker, msg, t);
+    public void debug(Marker marker, String msg, Throwable t){
+    	logger.debug(marker, msg, t);
     }
 
     /**
@@ -343,8 +345,8 @@ public class Log4jUtils {
      * @return True if this Logger is enabled for the INFO level,
      *         false otherwise.
      */
-    public static boolean isInfoEnabled(){
-    	return LOG.isInfoEnabled();
+    public boolean isInfoEnabled(){
+    	return logger.isInfoEnabled();
     }
 
     /**
@@ -352,8 +354,8 @@ public class Log4jUtils {
      *
      * @param msg the message string to be logged
      */
-    public static void info(String msg){
-    	LOG.info(msg);
+    public void info(String msg){
+    	logger.info(msg);
     }
 
     /**
@@ -367,8 +369,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void info(String format, Object arg){
-    	LOG.info(format, arg);
+    public void info(String format, Object arg){
+    	logger.info(format, arg);
     }
 
     /**
@@ -383,8 +385,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void info(String format, Object arg1, Object arg2){
-    	LOG.info(format, arg1, arg2);
+    public void info(String format, Object arg1, Object arg2){
+    	logger.info(format, arg1, arg2);
     }
 
     /**
@@ -402,8 +404,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void info(String format, Object... arguments){
-    	LOG.info(format, arguments);
+    public void info(String format, Object... arguments){
+    	logger.info(format, arguments);
     }
 
     /**
@@ -413,8 +415,8 @@ public class Log4jUtils {
      * @param msg the message accompanying the exception
      * @param t   the exception (throwable) to log
      */
-    public static void info(String msg, Throwable t){
-    	LOG.info(msg, t);
+    public void info(String msg, Throwable t){
+    	logger.info(msg, t);
     }
 
     /**
@@ -424,8 +426,8 @@ public class Log4jUtils {
      * @param marker The marker data to take into consideration
      * @return true if this logger is warn enabled, false otherwise 
      */
-    public static boolean isInfoEnabled(Marker marker){
-    	return LOG.isInfoEnabled(marker);
+    public boolean isInfoEnabled(Marker marker){
+    	return logger.isInfoEnabled(marker);
     }
 
     /**
@@ -434,8 +436,8 @@ public class Log4jUtils {
      * @param marker The marker specific to this log statement
      * @param msg    the message string to be logged
      */
-    public static void info(Marker marker, String msg){
-    	LOG.info(marker, msg);
+    public void info(Marker marker, String msg){
+    	logger.info(marker, msg);
     }
 
     /**
@@ -446,8 +448,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void info(Marker marker, String format, Object arg){
-    	LOG.info(marker, format, arg);
+    public void info(Marker marker, String format, Object arg){
+    	logger.info(marker, format, arg);
     }
 
     /**
@@ -460,8 +462,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void info(Marker marker, String format, Object arg1, Object arg2){
-    	LOG.info(marker, format, arg1, arg2);
+    public void info(Marker marker, String format, Object arg1, Object arg2){
+    	logger.info(marker, format, arg1, arg2);
     }
 
     /**
@@ -473,8 +475,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void info(Marker marker, String format, Object... arguments){
-    	LOG.info(marker, format, arguments);
+    public void info(Marker marker, String format, Object... arguments){
+    	logger.info(marker, format, arguments);
     }
 
     /**
@@ -485,8 +487,8 @@ public class Log4jUtils {
      * @param msg    the message accompanying the exception
      * @param t      the exception (throwable) to log
      */
-    public static void info(Marker marker, String msg, Throwable t){
-    	LOG.info(marker, msg, t);
+    public void info(Marker marker, String msg, Throwable t){
+    	logger.info(marker, msg, t);
     }
 
     /**
@@ -495,8 +497,8 @@ public class Log4jUtils {
      * @return True if this Logger is enabled for the WARN level,
      *         false otherwise.
      */
-    public static boolean isWarnEnabled(){
-    	return LOG.isWarnEnabled();
+    public boolean isWarnEnabled(){
+    	return logger.isWarnEnabled();
     }
 
     /**
@@ -504,8 +506,8 @@ public class Log4jUtils {
      *
      * @param msg the message string to be logged
      */
-    public static void warn(String msg){
-    	LOG.warn(msg);
+    public void warn(String msg){
+    	logger.warn(msg);
     }
 
     /**
@@ -519,8 +521,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void warn(String format, Object arg){
-    	LOG.warn(format, arg);
+    public void warn(String format, Object arg){
+    	logger.warn(format, arg);
     }
 
     /**
@@ -538,8 +540,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void warn(String format, Object... arguments){
-    	LOG.warn(format, arguments);
+    public void warn(String format, Object... arguments){
+    	logger.warn(format, arguments);
     }
 
     /**
@@ -554,8 +556,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void warn(String format, Object arg1, Object arg2){
-    	LOG.warn(format, arg1, arg2);
+    public void warn(String format, Object arg1, Object arg2){
+    	logger.warn(format, arg1, arg2);
     }
 
     /**
@@ -565,8 +567,8 @@ public class Log4jUtils {
      * @param msg the message accompanying the exception
      * @param t   the exception (throwable) to log
      */
-    public static void warn(String msg, Throwable t){
-    	LOG.warn(msg, t);
+    public void warn(String msg, Throwable t){
+    	logger.warn(msg, t);
     }
 
     /**
@@ -577,8 +579,8 @@ public class Log4jUtils {
      * @return True if this Logger is enabled for the WARN level,
      *         false otherwise.
      */
-    public static boolean isWarnEnabled(Marker marker){
-    	return LOG.isWarnEnabled(marker);
+    public boolean isWarnEnabled(Marker marker){
+    	return logger.isWarnEnabled(marker);
     }
 
     /**
@@ -587,8 +589,8 @@ public class Log4jUtils {
      * @param marker The marker specific to this log statement
      * @param msg    the message string to be logged
      */
-    public static void warn(Marker marker, String msg){
-    	LOG.warn(marker, msg);
+    public void warn(Marker marker, String msg){
+    	logger.warn(marker, msg);
     }
 
     /**
@@ -599,8 +601,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void warn(Marker marker, String format, Object arg){
-    	LOG.warn(marker, format, arg);
+    public void warn(Marker marker, String format, Object arg){
+    	logger.warn(marker, format, arg);
     }
 
     /**
@@ -613,8 +615,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void warn(Marker marker, String format, Object arg1, Object arg2){
-    	LOG.warn(marker, format, arg1, arg2);
+    public void warn(Marker marker, String format, Object arg1, Object arg2){
+    	logger.warn(marker, format, arg1, arg2);
     }
 
     /**
@@ -626,8 +628,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void warn(Marker marker, String format, Object... arguments){
-    	LOG.warn(marker, format, arguments);
+    public void warn(Marker marker, String format, Object... arguments){
+    	logger.warn(marker, format, arguments);
     }
 
     /**
@@ -638,8 +640,8 @@ public class Log4jUtils {
      * @param msg    the message accompanying the exception
      * @param t      the exception (throwable) to log
      */
-    public static void warn(Marker marker, String msg, Throwable t){
-    	LOG.warn(marker, msg, t);
+    public void warn(Marker marker, String msg, Throwable t){
+    	logger.warn(marker, msg, t);
     }
 
     /**
@@ -648,8 +650,8 @@ public class Log4jUtils {
      * @return True if this Logger is enabled for the ERROR level,
      *         false otherwise.
      */
-    public static boolean isErrorEnabled(){
-    	return LOG.isErrorEnabled();
+    public boolean isErrorEnabled(){
+    	return logger.isErrorEnabled();
     }
 
     /**
@@ -657,8 +659,8 @@ public class Log4jUtils {
      *
      * @param msg the message string to be logged
      */
-    public static void error(String msg){
-    	LOG.error(msg);
+    public void error(String msg){
+    	logger.error(msg);
     }
 
     /**
@@ -672,8 +674,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void error(String format, Object arg){
-    	LOG.error(format, arg);
+    public void error(String format, Object arg){
+    	logger.error(format, arg);
     }
 
     /**
@@ -688,8 +690,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void error(String format, Object arg1, Object arg2){
-    	LOG.error(format, arg1, arg2);
+    public void error(String format, Object arg1, Object arg2){
+    	logger.error(format, arg1, arg2);
     }
 
     /**
@@ -707,8 +709,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void error(String format, Object... arguments){
-    	LOG.error(format, arguments);
+    public void error(String format, Object... arguments){
+    	logger.error(format, arguments);
     }
 
     /**
@@ -718,8 +720,8 @@ public class Log4jUtils {
      * @param msg the message accompanying the exception
      * @param t   the exception (throwable) to log
      */
-    public static void error(String msg, Throwable t){
-    	LOG.error(msg, t);
+    public void error(String msg, Throwable t){
+    	logger.error(msg, t);
     }
 
     /**
@@ -730,8 +732,8 @@ public class Log4jUtils {
      * @return True if this Logger is enabled for the ERROR level,
      *         false otherwise.
      */
-    public static boolean isErrorEnabled(Marker marker){
-    	return LOG.isErrorEnabled(marker);
+    public boolean isErrorEnabled(Marker marker){
+    	return logger.isErrorEnabled(marker);
     }
 
     /**
@@ -740,8 +742,8 @@ public class Log4jUtils {
      * @param marker The marker specific to this log statement
      * @param msg    the message string to be logged
      */
-    public static void error(Marker marker, String msg){
-    	LOG.error(marker, msg);
+    public void error(Marker marker, String msg){
+    	logger.error(marker, msg);
     }
 
     /**
@@ -752,8 +754,8 @@ public class Log4jUtils {
      * @param format the format string
      * @param arg    the argument
      */
-    public static void error(Marker marker, String format, Object arg){
-    	LOG.error(marker, format, arg);
+    public void error(Marker marker, String format, Object arg){
+    	logger.error(marker, format, arg);
     }
 
     /**
@@ -766,8 +768,8 @@ public class Log4jUtils {
      * @param arg1   the first argument
      * @param arg2   the second argument
      */
-    public static void error(Marker marker, String format, Object arg1, Object arg2){
-    	LOG.error(marker, format, arg1, arg2);
+    public void error(Marker marker, String format, Object arg1, Object arg2){
+    	logger.error(marker, format, arg1, arg2);
     }
 
     /**
@@ -779,8 +781,8 @@ public class Log4jUtils {
      * @param format    the format string
      * @param arguments a list of 3 or more arguments
      */
-    public static void error(Marker marker, String format, Object... arguments){
-    	LOG.error(marker, format, arguments);
+    public void error(Marker marker, String format, Object... arguments){
+    	logger.error(marker, format, arguments);
     }
 
     /**
@@ -792,8 +794,8 @@ public class Log4jUtils {
      * @param msg    the message accompanying the exception
      * @param t      the exception (throwable) to log
      */
-    public static void error(Marker marker, String msg, Throwable t){
-    	LOG.error(marker, msg, t);
+    public void error(Marker marker, String msg, Throwable t){
+    	logger.error(marker, msg, t);
     }
     
 }

@@ -19,8 +19,6 @@
 package org.apache.logging.log4j.spring.boot.ext;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.sql.DataSource;
 
@@ -34,11 +32,11 @@ import org.apache.logging.log4j.core.appender.db.jdbc.ConnectionSource;
 import org.apache.logging.log4j.core.appender.db.jdbc.JdbcAppender;
 import org.apache.logging.log4j.core.filter.MarkerFilter;
 import org.apache.logging.log4j.spring.boot.Log4jJdbcProperties;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
+import org.apache.logging.log4j.spring.boot.Markers;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * TODO
@@ -48,7 +46,6 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 
 	private DataSource dataSource;
 	private Log4jJdbcProperties jdbcProperties;
-	private static final ConcurrentMap<Marker, JdbcAppender> COMPLIED_FORMAT = new ConcurrentHashMap<Marker, JdbcAppender>();
 	
 	/**
 	 * Sets the datasource to use.
@@ -65,14 +62,6 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 	public void setProperties(Log4jJdbcProperties jdbcProperties) {
 		this.jdbcProperties = jdbcProperties;
 	}
-	
-	public static JdbcAppender getJdbcAppender(Marker marker) {
-		JdbcAppender ret = COMPLIED_FORMAT.get(marker);
-		if (ret != null) {
-			return ret;
-		}
-		return null;
- 	}
 	
 	public JdbcAppender newJdbcAppender(final org.apache.logging.log4j.core.config.Configuration config, Log4jJdbcAppenderProperties properties) {
 		
@@ -104,10 +93,6 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 				.withIgnoreExceptions(properties.isIgnoreExceptions())
 				.withFilter(filter)
 				.build();
-		
-		config.addAppender(appender);
-		
-		appender.start();
 				
 		return appender;
 	}
@@ -128,17 +113,17 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 		
 		for (Log4jJdbcAppenderProperties properties : jdbcAppenders) {
 			
-			Marker marker = MarkerFactory.getMarker(properties.getMarker()); 
-			JdbcAppender ret = COMPLIED_FORMAT.get(marker);
-			if (ret != null || CollectionUtils.isEmpty(properties.getColumnMappings())) {
+			if (CollectionUtils.isEmpty(properties.getColumnMappings())) {
 				continue;
 			}
 			
-			final Logger interLogger = ctx.getLogger(properties.getLogger());
+			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : Markers.JDBC_LOGGER_NAME);
 			JdbcAppender appender = this.newJdbcAppender(config, properties);
+
+			config.addAppender(appender);
 			interLogger.addAppender(appender);
 			
-			COMPLIED_FORMAT.put(marker, appender);
+			appender.start();
 			
 		}
 		
