@@ -12,9 +12,14 @@ public class Log4jUtils {
 		logger = LoggerFactory.getLogger(loggerName);
 	}
 	
+	public static Log4jUtils instance(Marker marker) {
+		return new Log4jUtils(marker.getName());
+	}
+	
 	public static Log4jUtils instance(String loggerName) {
 		return new Log4jUtils(loggerName);
 	}
+	
 	
 	 /**
      * Is the logger instance enabled for the TRACE level?
