@@ -43,14 +43,17 @@ public class Log4j2MDCInterceptor implements HandlerInterceptor {
 			ThreadContext.put("param." + key, request.getParameter(key));
 		}
 		
-		Enumeration<?> enu = request.getSession().getAttributeNames();
-		while (enu.hasMoreElements()) {
-			String key = (String) enu.nextElement();
-			Object val = request.getSession().getAttribute(key);
-			if (val instanceof String) {
-				ThreadContext.put("session." + key, String.valueOf(val));
+		/*HttpSession session = request.getSession(false);
+		if(session != null) {
+			Enumeration<?> enu = session.getAttributeNames();
+			while (enu.hasMoreElements()) {
+				String key = (String) enu.nextElement();
+				Object val = session.getAttribute(key);
+				if (val instanceof String) {
+					ThreadContext.put("session." + key, String.valueOf(val));
+				}
 			}
-		}
+		}*/
 
 		return true;
 	}
