@@ -92,9 +92,9 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 				.setColumnMappings(columnMappings)
 				.setConnectionSource(connectionSource)
 				.setTableName(properties.getTableName())
-				.withName(properties.getAppender())
-				.withIgnoreExceptions(properties.isIgnoreExceptions())
-				.withFilter(filter)
+				.setName(properties.getAppender())
+				.setIgnoreExceptions(properties.isIgnoreExceptions())
+				.setFilter(filter)
 				.build();
 				
 		return appender;

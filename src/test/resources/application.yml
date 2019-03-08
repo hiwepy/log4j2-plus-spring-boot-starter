@@ -1,7 +1,6 @@
 logging:
   log4j:
     jdbc:
-      enabled: true
       appenders:
       - table-name: TB_LOG_BIZ
         column-mappings: 
@@ -21,4 +20,5 @@ logging:
           pattern: "%message"
         - column: exception
           pattern: "%ex{full}"
-        
+      enabled: true
+      sharding-jdbc: true
