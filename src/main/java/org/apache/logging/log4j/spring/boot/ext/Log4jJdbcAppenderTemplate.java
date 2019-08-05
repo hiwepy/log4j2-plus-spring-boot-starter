@@ -22,29 +22,21 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Logger;
-import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.db.ColumnMapping;
 import org.apache.logging.log4j.core.appender.db.jdbc.ColumnConfig;
 import org.apache.logging.log4j.core.appender.db.jdbc.ConnectionSource;
 import org.apache.logging.log4j.core.appender.db.jdbc.JdbcAppender;
 import org.apache.logging.log4j.core.filter.MarkerFilter;
-import org.apache.logging.log4j.spring.boot.Log4jJdbcProperties;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
  * TODO
  * @author <a href="https://github.com/vindell">vindell</a>
  */
-public class Log4jJdbcAppenderTemplate implements InitializingBean {
+public class Log4jJdbcAppenderTemplate {
 
 	private DataSource dataSource;
-	private Log4jJdbcProperties jdbcProperties;
 	
 	/**
 	 * Sets the datasource to use.
@@ -54,13 +46,6 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 		this.dataSource = dataSource;
 	}
 
-	/**
-	 * Sets the properties to use.
-	 * @param jdbcProperties The properties to use.
-	 */
-	public void setProperties(Log4jJdbcProperties jdbcProperties) {
-		this.jdbcProperties = jdbcProperties;
-	}
 	
 	public Log4jJdbcAppenderTemplate() {
 		
@@ -82,8 +67,12 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 		// 配置Marker过滤器(标记过滤器)
 		MarkerFilter filter = MarkerFilter.createFilter(properties.getMarker(), Filter.Result.ACCEPT,
 				Filter.Result.DENY);
+		
 		// build ConnectionSource Impl
 		ConnectionSource connectionSource = new Log4jJdbcConnectionSource(dataSource);
+		
+		String appenderName = StringUtils.hasText(properties.getAppender()) ? properties.getAppender() : properties.getMarker();
+		
 		// build JdbcAppender
 		JdbcAppender appender = JdbcAppender.newBuilder()
 				.setBufferSize(properties.getBufferSize())
@@ -92,39 +81,14 @@ public class Log4jJdbcAppenderTemplate implements InitializingBean {
 				.setColumnMappings(columnMappings)
 				.setConnectionSource(connectionSource)
 				.setTableName(properties.getTableName())
-				.setName(properties.getAppender())
+				.setName(appenderName)
 				.setIgnoreExceptions(properties.isIgnoreExceptions())
 				.setFilter(filter)
 				.build();
-				
+		
+		appender.start();
+		
 		return appender;
-	}
-
-	 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-
-		List<Log4jJdbcAppenderProperties> jdbcAppenders = jdbcProperties.getAppenders();
-		Assert.notEmpty(jdbcAppenders, "Need to specify at least one JdbcAppender Properties.");
-		
-		final LoggerContext ctx = (LoggerContext) LogManager.getContext(jdbcProperties.isCurrentContext());
-		final org.apache.logging.log4j.core.config.Configuration config = ctx.getConfiguration();
-		
-		for (Log4jJdbcAppenderProperties properties : jdbcAppenders) {
-			
-			if (CollectionUtils.isEmpty(properties.getColumnMappings())) {
-				continue;
-			}
-			
-			final Logger interLogger = ctx.getLogger(StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : properties.getMarker());
-			JdbcAppender appender = this.newJdbcAppender(config, properties);
-
-			config.addAppender(appender);
-			interLogger.addAppender(appender);
-			appender.start();
-			ctx.updateLoggers();
-		}
-		
 	}
 
 }

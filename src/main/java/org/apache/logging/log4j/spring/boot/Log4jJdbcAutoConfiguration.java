@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.spring.boot.ext.Log4jDataSource;
 import org.apache.logging.log4j.spring.boot.ext.Log4jJdbcAppenderTemplate;
+import org.apache.logging.log4j.spring.boot.ext.Log4jJdbcInitApplicationListener;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -63,10 +64,17 @@ public class Log4jJdbcAutoConfiguration {
 			} else if (this.dataSourceProperties != null) {
 				template.setDataSource(this.dataSourceProperties.initializeDataSourceBuilder().build());
 			}
-			template.setProperties(jdbcProperties);
 			return template;
 		}
-
+		
+		@Bean
+		public Log4jJdbcInitApplicationListener log4jJdbcInitApplicationListener(Log4jJdbcAppenderTemplate jdbcAppenderTemplate) {
+			Log4jJdbcInitApplicationListener listener = new Log4jJdbcInitApplicationListener();
+			listener.setJdbcAppenderTemplate(jdbcAppenderTemplate);
+			listener.setProperties(jdbcProperties);
+			return listener;
+		}
+		
 	}
 
 }
