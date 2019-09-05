@@ -36,8 +36,6 @@ public class Log4jJdbcAppenderProperties {
 	protected boolean async = false;
 	/** 是否忽略异常信息 **/
 	protected boolean ignoreExceptions = true;
-	/** Appender名称 **/
-	protected String appender = "";
 	/** 日志表名称 **/
 	protected String tableName = "LOG4j_BIZ";
 	/** 数据库列与表达式对应关系 **/
@@ -68,14 +66,6 @@ public class Log4jJdbcAppenderProperties {
 
 	public void setIgnoreExceptions(boolean ignoreExceptions) {
 		this.ignoreExceptions = ignoreExceptions;
-	}
-
-	public String getAppender() {
-		return appender;
-	}
-
-	public void setAppender(String appender) {
-		this.appender = appender;
 	}
 
 	public String getTableName() {

@@ -71,7 +71,7 @@ public class Log4jJdbcAppenderTemplate {
 		// build ConnectionSource Impl
 		ConnectionSource connectionSource = new Log4jJdbcConnectionSource(dataSource);
 		
-		String appenderName = StringUtils.hasText(properties.getAppender()) ? properties.getAppender() : properties.getMarker();
+		String appenderName = StringUtils.hasText(properties.getLogger()) ? properties.getLogger() : properties.getMarker();
 		
 		// build JdbcAppender
 		JdbcAppender appender = JdbcAppender.newBuilder()
