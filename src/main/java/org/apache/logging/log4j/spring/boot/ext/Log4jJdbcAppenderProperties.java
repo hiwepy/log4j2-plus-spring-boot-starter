@@ -42,7 +42,7 @@ public class Log4jJdbcAppenderProperties {
 	private List<Log4jJdbcColumnConfig> columnMappings = new ArrayList<Log4jJdbcColumnConfig>();
 	
 	/** 日志批量缓冲大小；小于0，则批量提交无效 **/
-	protected int bufferSize = 10;
+	protected int bufferSize = -1;
 
 	public String getLogger() {
 		return logger;
