@@ -22,7 +22,7 @@ import org.springframework.core.io.ResourceLoader;
 /**
  * Log4j基于JDBC存储日志的配置类
  * http://www.cnblogs.com/bigbang92/p/Log4j2.html
- * @author 		： <a href="https://github.com/vindell">vindell</a>
+ * @author 		： <a href="https://github.com/hiwepy">hiwepy</a>
  */
 @Configuration
 @ConditionalOnClass({ Logger.class })
