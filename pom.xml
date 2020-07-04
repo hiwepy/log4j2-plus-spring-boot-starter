@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.2.RELEASE</version>
+		<version>2.3.0.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -374,8 +374,7 @@
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
         <maven-surefire-plugin.vertsion>2.22.1</maven-surefire-plugin.vertsion>
 		<maven-nexus-staging-plugin.version>1.6.8</maven-nexus-staging-plugin.version>
-		<sharding-jdbc.version>3.1.0</sharding-jdbc.version>
-		<sharding-transaction.version>3.0.0.M3</sharding-transaction.version>
+		<sharding-jdbc.version>4.1.1</sharding-jdbc.version>
 	</properties>
 	
 	<dependencyManagement>
@@ -388,22 +387,24 @@
 			    <version>${disruptor.version}</version>
 			</dependency>
 		
-			<!-- http://mvnrepository.com/artifact/io.shardingsphere -->
+			<!-- https://mvnrepository.com/artifact/org.apache.shardingsphere -->
 			<dependency>
-			    <groupId>io.shardingsphere</groupId>
-			    <artifactId>sharding-core</artifactId>
-			    <version>${sharding-jdbc.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>io.shardingsphere</groupId>
+				<groupId>org.apache.shardingsphere</groupId>
 				<artifactId>sharding-jdbc-core</artifactId>
 				<version>${sharding-jdbc.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>io.shardingsphere</groupId>
-				<artifactId>sharding-jdbc-transaction</artifactId>
+				<groupId>org.apache.shardingsphere</groupId>
+				<artifactId>sharding-transaction-spring</artifactId>
 				<version>${sharding-transaction.version}</version>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.apache.shardingsphere/sharding-jdbc-spring-boot-starter -->
+			<dependency>
+			    <groupId>org.apache.shardingsphere</groupId>
+			    <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+			    <version>${sharding-jdbc.version}</version>
+			</dependency>
+			
 		</dependencies>
 	</dependencyManagement>
 
@@ -505,11 +506,6 @@
 		<dependency>
 		    <groupId>com.lmax</groupId>
 		    <artifactId>disruptor</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.shardingsphere</groupId>
-			<artifactId>sharding-jdbc-core</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		
 	</dependencies>
