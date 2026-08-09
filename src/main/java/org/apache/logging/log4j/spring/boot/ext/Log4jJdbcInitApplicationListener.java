@@ -31,6 +31,12 @@ import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+/**
+ * Log4jJdbcInitApplicationListener class.
+ *
+ * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 1.0.0
+ */
 public class Log4jJdbcInitApplicationListener implements ApplicationListener<ApplicationReadyEvent> {
 
 	private Log4jJdbcAppenderTemplate jdbcAppenderTemplate;

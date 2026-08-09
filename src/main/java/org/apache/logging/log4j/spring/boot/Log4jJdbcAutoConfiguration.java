@@ -29,6 +29,13 @@ import org.springframework.core.io.ResourceLoader;
 @ConditionalOnProperty(name = { "logging.log4j.jdbc.enabled" }, havingValue = "true", matchIfMissing = false)
 @EnableConfigurationProperties({ Log4jJdbcProperties.class })
 @AutoConfigureAfter({ DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class })
+/**
+ * Auto-configuration for Log4jJdbc integration.
+ * <p>Registers the necessary beans when the feature is enabled.</p>
+ *
+ * @author [@Loong Wan](https://github.com/loong10k)
+ * @since 1.0.0
+ */
 public class Log4jJdbcAutoConfiguration {
 	
 	@Configuration
