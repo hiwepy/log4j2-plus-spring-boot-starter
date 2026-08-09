@@ -17,11 +17,12 @@ package org.apache.logging.log4j.spring.boot;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Marker;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {{ @link Markers }}.
+ * Unit tests for {@link Markers}.
  *
  * @author [@Loong Wan](https://github.com/loong10k)
  * @since 1.0.0
@@ -34,5 +35,19 @@ class MarkersTest {
     void testInstantiation() {
         Markers instance = new Markers();
         assertThat(instance).isNotNull();
+    }
+
+    @Test
+    @DisplayName("JDBC_LOGGER_NAME constant has expected value")
+    void testJdbcLoggerName() {
+        assertThat(Markers.JDBC_LOGGER_NAME).isEqualTo("JDBC-Logger");
+    }
+
+    @Test
+    @DisplayName("DB marker is not null and has expected name")
+    void testDbMarker() {
+        Marker db = Markers.DB;
+        assertThat(db).isNotNull();
+        assertThat(db.getName()).isEqualTo("dblog");
     }
 }

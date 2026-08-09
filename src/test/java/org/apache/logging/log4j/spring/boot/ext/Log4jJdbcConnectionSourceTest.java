@@ -15,13 +15,21 @@
  */
 package org.apache.logging.log4j.spring.boot.ext;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
- * Unit tests for {{ @link Log4jJdbcConnectionSource }}.
+ * Unit tests for {@link Log4jJdbcConnectionSource}.
  *
  * @author [@Loong Wan](https://github.com/loong10k)
  * @since 1.0.0
@@ -30,9 +38,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Log4jJdbcConnectionSourceTest {
 
     @Test
-    @DisplayName("Instance can be created via constructor")
+    @DisplayName("Constructor creates non-null instance")
     void testInstantiation() {
-        Log4jJdbcConnectionSource instance = new Log4jJdbcConnectionSource(null);
+        DataSource mockDs = mock(DataSource.class);
+        Log4jJdbcConnectionSource instance = new Log4jJdbcConnectionSource(mockDs);
         assertThat(instance).isNotNull();
+    }
+
+    @Test
+    @DisplayName("getConnection delegates to datasource")
+    void testGetConnection() throws SQLException {
+        DataSource mockDs = mock(DataSource.class);
+        Connection mockConn = mock(Connection.class);
+        when(mockDs.getConnection()).thenReturn(mockConn);
+
+        Log4jJdbcConnectionSource source = new Log4jJdbcConnectionSource(mockDs);
+        Connection result = source.getConnection();
+
+        assertThat(result).isEqualTo(mockConn);
+        verify(mockDs).getConnection();
     }
 }

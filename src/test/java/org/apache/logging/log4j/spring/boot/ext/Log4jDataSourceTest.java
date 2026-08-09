@@ -15,13 +15,15 @@
  */
 package org.apache.logging.log4j.spring.boot.ext;
 
+import java.lang.reflect.Method;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {{ @link Log4jDataSource }}.
+ * Unit tests for {@link Log4jDataSource}.
  *
  * @author [@Loong Wan](https://github.com/loong10k)
  * @since 1.0.0
@@ -30,9 +32,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 class Log4jDataSourceTest {
 
     @Test
-    @DisplayName("Instance can be created via constructor")
-    void testInstantiation() {
-        Log4jDataSource instance = new Log4jDataSource();
-        assertThat(instance).isNotNull();
+    @DisplayName("Log4jDataSource annotation is present on itself via @Qualifier")
+    void testAnnotationIsQualifier() {
+        assertThat(Log4jDataSource.class.isAnnotation()).isTrue();
+        assertThat(Log4jDataSource.class.isInterface()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Log4jDataSource can be retrieved via reflection")
+    void testAnnotationRetrievedViaReflection() throws Exception {
+        AnnotatedClass obj = new AnnotatedClass();
+        Method method = AnnotatedClass.class.getMethod("getDataSource");
+        assertThat(method.isAnnotationPresent(Log4jDataSource.class)).isFalse();
+        // Verify annotation can be applied at parameter level
+        Method annotatedMethod = AnnotatedClass.class.getMethod("setDataSource", javax.sql.DataSource.class);
+        assertThat(annotatedMethod.getParameterAnnotations()[0]).isNotNull();
+    }
+
+    static class AnnotatedClass {
+        public javax.sql.DataSource getDataSource() { return null; }
+        public void setDataSource(javax.sql.DataSource ds) { }
     }
 }

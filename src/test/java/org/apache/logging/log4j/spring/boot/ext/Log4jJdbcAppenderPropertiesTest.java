@@ -15,13 +15,16 @@
  */
 package org.apache.logging.log4j.spring.boot.ext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {{ @link Log4jJdbcAppenderProperties }}.
+ * Unit tests for {@link Log4jJdbcAppenderProperties}.
  *
  * <p>Verifies default values, getters/setters and POJO contract.</p>
  *
@@ -30,34 +33,78 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DisplayName("Log4jJdbcAppenderProperties Tests")
 class Log4jJdbcAppenderPropertiesTest {
+
     @Test
-    @DisplayName("Default constructor creates non-null instance")
+    @DisplayName("Default constructor creates non-null instance with expected defaults")
     void testDefaultInstance() {
         Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
         assertThat(props).isNotNull();
+        assertThat(props.getMarker()).isEqualTo("dblog");
+        assertThat(props.getLogger()).isEmpty();
+        assertThat(props.isAsync()).isFalse();
+        assertThat(props.isIgnoreExceptions()).isTrue();
+        assertThat(props.getTableName()).isEqualTo("LOG4j_BIZ");
+        assertThat(props.getColumnMappings()).isNotNull().isEmpty();
+        assertThat(props.getBufferSize()).isEqualTo(-1);
     }
 
     @Test
-    @DisplayName("Field 'columnMappings' can be set and read")
-    void testColumnMappingsField() {
+    @DisplayName("marker getter/setter works correctly")
+    void testMarker() {
         Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = Log4jJdbcAppenderProperties.class.getDeclaredField("columnMappings");
-            f.setAccessible(true);
-            f.set(props, null);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
+        props.setMarker("customMarker");
+        assertThat(props.getMarker()).isEqualTo("customMarker");
     }
 
     @Test
-    @DisplayName("Setter 'setColumnMappings' accepts a columnMappings value")
-    void testColumnMappingsSetter() {
+    @DisplayName("logger getter/setter works correctly")
+    void testLogger() {
         Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
-        props.setColumnMappings(null);
-        // Setter did not throw
+        props.setLogger("com.example.MyLogger");
+        assertThat(props.getLogger()).isEqualTo("com.example.MyLogger");
+    }
+
+    @Test
+    @DisplayName("async getter/setter works correctly")
+    void testAsync() {
+        Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
+        assertThat(props.isAsync()).isFalse();
+        props.setAsync(true);
+        assertThat(props.isAsync()).isTrue();
+    }
+
+    @Test
+    @DisplayName("ignoreExceptions getter/setter works correctly")
+    void testIgnoreExceptions() {
+        Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
+        assertThat(props.isIgnoreExceptions()).isTrue();
+        props.setIgnoreExceptions(false);
+        assertThat(props.isIgnoreExceptions()).isFalse();
+    }
+
+    @Test
+    @DisplayName("tableName getter/setter works correctly")
+    void testTableName() {
+        Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
+        props.setTableName("MY_TABLE");
+        assertThat(props.getTableName()).isEqualTo("MY_TABLE");
+    }
+
+    @Test
+    @DisplayName("columnMappings getter/setter works correctly")
+    void testColumnMappings() {
+        Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
+        List<Log4jJdbcColumnConfig> mappings = new ArrayList<>();
+        mappings.add(new Log4jJdbcColumnConfig());
+        props.setColumnMappings(mappings);
+        assertThat(props.getColumnMappings()).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("bufferSize getter/setter works correctly")
+    void testBufferSize() {
+        Log4jJdbcAppenderProperties props = new Log4jJdbcAppenderProperties();
+        props.setBufferSize(100);
+        assertThat(props.getBufferSize()).isEqualTo(100);
     }
 }

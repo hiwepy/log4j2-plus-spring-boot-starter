@@ -22,7 +22,7 @@ import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {{ @link Log4jJdbcAutoConfiguration }}.
+ * Unit tests for {@link Log4jJdbcAutoConfiguration}.
  *
  * <p>Verifies the auto-configuration activates under the expected conditions
  * and exposes its declared beans.</p>
@@ -43,10 +43,10 @@ class Log4jJdbcAutoConfigurationTest {
     }
 
     @Test
-    @DisplayName("Auto-configuration loads when 'spring.boot.enabled=true'")
+    @DisplayName("Auto-configuration loads when 'logging.log4j.jdbc.enabled=true'")
     void testLoadsWhenEnabledPropertySet() {
         runner.withUserConfiguration(Log4jJdbcAutoConfiguration.class)
-                .withPropertyValues("spring.boot.enabled=true")
+                .withPropertyValues("logging.log4j.jdbc.enabled=true")
                 .run(context -> assertThat(context).hasSingleBean(Log4jJdbcAutoConfiguration.class));
     }
 
@@ -54,6 +54,14 @@ class Log4jJdbcAutoConfigurationTest {
     @DisplayName("Auto-configuration is absent when property is not set")
     void testNotLoadedWhenPropertyAbsent() {
         runner.withUserConfiguration(Log4jJdbcAutoConfiguration.class)
+                .run(context -> assertThat(context).doesNotHaveBean(Log4jJdbcAutoConfiguration.class));
+    }
+
+    @Test
+    @DisplayName("Auto-configuration is absent when property is false")
+    void testNotLoadedWhenPropertyFalse() {
+        runner.withUserConfiguration(Log4jJdbcAutoConfiguration.class)
+                .withPropertyValues("logging.log4j.jdbc.enabled=false")
                 .run(context -> assertThat(context).doesNotHaveBean(Log4jJdbcAutoConfiguration.class));
     }
 }

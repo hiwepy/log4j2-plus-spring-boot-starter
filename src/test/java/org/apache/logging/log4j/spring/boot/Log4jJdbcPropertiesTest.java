@@ -15,13 +15,17 @@
  */
 package org.apache.logging.log4j.spring.boot;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.spring.boot.ext.Log4jJdbcAppenderProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Unit tests for {{ @link Log4jJdbcProperties }}.
+ * Unit tests for {@link Log4jJdbcProperties}.
  *
  * <p>Verifies default values, getters/setters and POJO contract.</p>
  *
@@ -30,80 +34,62 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 @DisplayName("Log4jJdbcProperties Tests")
 class Log4jJdbcPropertiesTest {
+
     @Test
-    @DisplayName("Default constructor creates non-null instance")
+    @DisplayName("Default constructor creates non-null instance with expected defaults")
     void testDefaultInstance() {
         Log4jJdbcProperties props = new Log4jJdbcProperties();
         assertThat(props).isNotNull();
-    }
-
-    @Test
-    @DisplayName("Field 'currentContext' can be set and read")
-    void testCurrentContextField() {
-        Log4jJdbcProperties props = new Log4jJdbcProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = Log4jJdbcProperties.class.getDeclaredField("currentContext");
-            f.setAccessible(true);
-            f.set(props, true);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Field 'enabled' can be set and read")
-    void testEnabledField() {
-        Log4jJdbcProperties props = new Log4jJdbcProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = Log4jJdbcProperties.class.getDeclaredField("enabled");
-            f.setAccessible(true);
-            f.set(props, true);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Field 'shardingJdbc' can be set and read")
-    void testShardingJdbcField() {
-        Log4jJdbcProperties props = new Log4jJdbcProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = Log4jJdbcProperties.class.getDeclaredField("shardingJdbc");
-            f.setAccessible(true);
-            f.set(props, true);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
-    }
-
-    @Test
-    @DisplayName("Field 'appenders' can be set and read")
-    void testAppendersField() {
-        Log4jJdbcProperties props = new Log4jJdbcProperties();
-        // Use reflection to set private field (covers all fields including those without setters)
-        try {
-            java.lang.reflect.Field f = Log4jJdbcProperties.class.getDeclaredField("appenders");
-            f.setAccessible(true);
-            f.set(props, null);
-            Object value = f.get(props);
-            assertThat(value).isNotNull();
-        } catch (Exception e) {
-            // Field may have a more complex type; skip silently
-        }
+        assertThat(props.isCurrentContext()).isFalse();
+        assertThat(props.isEnabled()).isTrue();
+        assertThat(props.isShardingJdbc()).isFalse();
+        assertThat(props.getAppenders()).isNotNull().isEmpty();
     }
 
     @Test
     @DisplayName("Public constant 'PREFIX' has expected value")
     void testPREFIXConstant() {
         assertThat(Log4jJdbcProperties.PREFIX).isEqualTo("logging.log4j.jdbc");
+    }
+
+    @Test
+    @DisplayName("currentContext getter/setter works correctly")
+    void testCurrentContext() {
+        Log4jJdbcProperties props = new Log4jJdbcProperties();
+        assertThat(props.isCurrentContext()).isFalse();
+        props.setCurrentContext(true);
+        assertThat(props.isCurrentContext()).isTrue();
+        props.setCurrentContext(false);
+        assertThat(props.isCurrentContext()).isFalse();
+    }
+
+    @Test
+    @DisplayName("enabled getter/setter works correctly")
+    void testEnabled() {
+        Log4jJdbcProperties props = new Log4jJdbcProperties();
+        assertThat(props.isEnabled()).isTrue();
+        props.setEnabled(false);
+        assertThat(props.isEnabled()).isFalse();
+        props.setEnabled(true);
+        assertThat(props.isEnabled()).isTrue();
+    }
+
+    @Test
+    @DisplayName("shardingJdbc getter/setter works correctly")
+    void testShardingJdbc() {
+        Log4jJdbcProperties props = new Log4jJdbcProperties();
+        assertThat(props.isShardingJdbc()).isFalse();
+        props.setShardingJdbc(true);
+        assertThat(props.isShardingJdbc()).isTrue();
+    }
+
+    @Test
+    @DisplayName("appenders getter/setter works correctly")
+    void testAppenders() {
+        Log4jJdbcProperties props = new Log4jJdbcProperties();
+        List<Log4jJdbcAppenderProperties> appenders = new ArrayList<>();
+        appenders.add(new Log4jJdbcAppenderProperties());
+        props.setAppenders(appenders);
+        assertThat(props.getAppenders()).hasSize(1);
     }
 }
