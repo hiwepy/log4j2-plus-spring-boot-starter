@@ -7,7 +7,7 @@ import org.apache.logging.log4j.core.layout.PatternLayout;
 /**
  * Log4jJdbcColumnConfig class.
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 public class Log4jJdbcColumnConfig {

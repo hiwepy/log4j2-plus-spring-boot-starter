@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * <p>Auto-configuration for Log4jJdbc integration.
  * Registers the necessary beans when the feature is enabled.</p>
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  * @since 1.0.0
  */
 @Configuration
