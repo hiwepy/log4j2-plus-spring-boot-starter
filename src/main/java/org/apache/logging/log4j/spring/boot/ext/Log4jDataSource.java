@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * Qualifier annotation for a DataSource to be injected in to Log4j. If used for a second
  * data source, the other (main) one would normally be marked as {@code @Primary}.
  *
- * @author [@Loong Wan](https://github.com/loong10k)
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
  */
 @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE,
 		ElementType.ANNOTATION_TYPE })
