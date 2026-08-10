@@ -18,7 +18,7 @@ public class RemoteAddrUtils {
 	
 	/**
 	 * 获取请求客户端IP地址，支持代理服务器
-	 * @author [@Loong Wan](https://github.com/loong10k)
+	 * @author <a href="https://github.com/loong10k">Loong Wan</a>
 	 * @param request {@link HttpServletRequest}
 	 * @return IP地址
 	 */
