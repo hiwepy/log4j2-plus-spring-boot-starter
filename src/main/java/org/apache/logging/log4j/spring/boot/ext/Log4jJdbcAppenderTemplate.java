@@ -13,9 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/**
- * 
- */
 package org.apache.logging.log4j.spring.boot.ext;
 
 import java.util.List;
@@ -33,6 +30,7 @@ import org.springframework.util.StringUtils;
 /**
  * TODO
  * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
  */
 public class Log4jJdbcAppenderTemplate {
 
@@ -50,6 +48,12 @@ public class Log4jJdbcAppenderTemplate {
 	public Log4jJdbcAppenderTemplate() {
 		
 	}
+	/**
+	 * <p>New jdbc appender.</p>
+	 * @param config the config
+	 * @param properties the properties
+	 * @return the jdbc appender
+	 */
 	
 	public JdbcAppender newJdbcAppender(final org.apache.logging.log4j.core.config.Configuration config, Log4jJdbcAppenderProperties properties) {
 		

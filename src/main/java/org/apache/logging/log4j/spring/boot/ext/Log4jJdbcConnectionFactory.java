@@ -13,9 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/**
- * 
- */
 package org.apache.logging.log4j.spring.boot.ext;
 
 import java.sql.Connection;
@@ -23,12 +20,14 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-/**
- * TODO
- * @author <a href="https://github.com/loong10k">Loong Wan</a>
- */
 public class Log4jJdbcConnectionFactory {
 
+	/**
+	 * <p>Singleton.</p>
+	 *
+	 * @author <a href="https://github.com/loong10k">Loong Wan</a>
+	 * @since 1.0.0
+	 */
 	private static interface Singleton {
 		final Log4jJdbcConnectionFactory INSTANCE = new Log4jJdbcConnectionFactory();
 	}
@@ -37,10 +36,12 @@ public class Log4jJdbcConnectionFactory {
 
 	private Log4jJdbcConnectionFactory() {
 	}
+	/** Sets the data source. */
 
 	public static void setDataSource(DataSource dataSource) throws SQLException {
 		Singleton.INSTANCE.dataSource = dataSource;
 	}
+	/** Gets the database connection. */
 
 	public static Connection getDatabaseConnection() throws SQLException {
 		return Singleton.INSTANCE.dataSource.getConnection();

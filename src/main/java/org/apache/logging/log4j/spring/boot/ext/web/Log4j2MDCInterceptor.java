@@ -14,8 +14,17 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * 用于添加请求参数到 {@link ThreadContext} 中，可使用 %X{}获取指定的值，如 %X{uuid}
  * http://logging.apache.org/log4j/2.x/manual/thread-context.html
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
  */
 public class Log4j2MDCInterceptor implements HandlerInterceptor {
+	/**
+	 * <p>Pre handle.</p>
+	 * @param request the request
+	 * @param response the response
+	 * @param handler the handler
+	 * @return the boolean
+	 */
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

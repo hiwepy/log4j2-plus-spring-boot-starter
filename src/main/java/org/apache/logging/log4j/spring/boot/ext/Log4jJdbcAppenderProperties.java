@@ -13,9 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/**
- * 
- */
 package org.apache.logging.log4j.spring.boot.ext;
 
 import java.util.ArrayList;
@@ -25,6 +22,7 @@ import java.util.List;
  * TODO
  * 
  * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
  */
 public class Log4jJdbcAppenderProperties {
 
@@ -43,58 +41,78 @@ public class Log4jJdbcAppenderProperties {
 	
 	/** 日志批量缓冲大小；小于0，则批量提交无效 **/
 	protected int bufferSize = -1;
+	/** Gets the logger. */
 
 	public String getLogger() {
 		return logger;
 	}
+	/** Sets the logger. */
 
 	public void setLogger(String logger) {
 		this.logger = logger;
 	}
+	/**
+	 * <p>Is async.</p>
+	 * @return the boolean
+	 */
 
 	public boolean isAsync() {
 		return async;
 	}
+	/** Sets the async. */
 
 	public void setAsync(boolean async) {
 		this.async = async;
 	}
+	/**
+	 * <p>Is ignore exceptions.</p>
+	 * @return the boolean
+	 */
 
 	public boolean isIgnoreExceptions() {
 		return ignoreExceptions;
 	}
+	/** Sets the ignore exceptions. */
 
 	public void setIgnoreExceptions(boolean ignoreExceptions) {
 		this.ignoreExceptions = ignoreExceptions;
 	}
+	/** Gets the table name. */
 
 	public String getTableName() {
 		return tableName;
 	}
+	/** Sets the table name. */
 
 	public void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
+	/** Gets the column mappings. */
 
 	public List<Log4jJdbcColumnConfig> getColumnMappings() {
 		return columnMappings;
 	}
+	/** Sets the column mappings. */
 
 	public void setColumnMappings(List<Log4jJdbcColumnConfig> columnMappings) {
 		this.columnMappings = columnMappings;
 	}
+	/** Gets the marker. */
 
 	public String getMarker() {
 		return marker;
 	}
+	/** Sets the marker. */
 
 	public void setMarker(String marker) {
 		this.marker = marker;
 	}
+	/** Gets the buffer size. */
 
 	public int getBufferSize() {
 		return bufferSize;
 	}
+	/** Sets the buffer size. */
 
 	public void setBufferSize(int bufferSize) {
 		this.bufferSize = bufferSize;

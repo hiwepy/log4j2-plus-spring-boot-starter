@@ -41,6 +41,10 @@ public class Log4jJdbcInitApplicationListener implements ApplicationListener<App
 
 	private Log4jJdbcAppenderTemplate jdbcAppenderTemplate;
 	private Log4jJdbcProperties jdbcProperties;
+	/**
+	 * <p>On application event.</p>
+	 * @param event the event
+	 */
 	
 	@Override
 	public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -57,7 +61,7 @@ public class Log4jJdbcInitApplicationListener implements ApplicationListener<App
 				continue;
 			}
 				
-			// 创建数据源日志输出 JdbcAppender
+			// 创建the data source日志输出 JdbcAppender
 			JdbcAppender appender = getJdbcAppenderTemplate().newJdbcAppender(configuration, properties);
 			configuration.addAppender(appender);
 			
@@ -84,10 +88,12 @@ public class Log4jJdbcInitApplicationListener implements ApplicationListener<App
 		
 		
 	}
+	/** Sets the jdbc appender template. */
 	
 	public void setJdbcAppenderTemplate(Log4jJdbcAppenderTemplate jdbcAppenderTemplate) {
 		this.jdbcAppenderTemplate = jdbcAppenderTemplate;
 	}
+	/** Gets the jdbc appender template. */
 
 	public Log4jJdbcAppenderTemplate getJdbcAppenderTemplate() {
 		return jdbcAppenderTemplate;
@@ -100,11 +106,11 @@ public class Log4jJdbcInitApplicationListener implements ApplicationListener<App
 	public void setProperties(Log4jJdbcProperties jdbcProperties) {
 		this.jdbcProperties = jdbcProperties;
 	}
+	/** Gets the jdbc properties. */
 	
 	public Log4jJdbcProperties getJdbcProperties() {
 		return jdbcProperties;
 	}
 	
 	
-
 }

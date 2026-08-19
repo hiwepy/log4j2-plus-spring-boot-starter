@@ -13,9 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-/**
- * 
- */
 package org.apache.logging.log4j.spring.boot.ext;
 
 import java.lang.annotation.Documented;
@@ -26,17 +23,17 @@ import java.lang.annotation.Target;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 
-/**
- * Qualifier annotation for a DataSource to be injected in to Log4j. If used for a second
- * data source, the other (main) one would normally be marked as {@code @Primary}.
- *
- * @author <a href="https://github.com/loong10k">Loong Wan</a>
- */
 @Target({ ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER, ElementType.TYPE,
 		ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Qualifier
+/**
+ * <p>Annotation for log4j data source.</p>
+ *
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
+ */
 public @interface Log4jDataSource {
 	
 }

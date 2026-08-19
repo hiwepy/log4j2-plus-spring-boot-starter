@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 使用已有数据源作为连接获取基础
+ * 使用已有the data source作为连接获取基础
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
  */
 public class Log4jJdbcConnectionSource extends AbstractConnectionSource {
 
@@ -20,6 +22,7 @@ public class Log4jJdbcConnectionSource extends AbstractConnectionSource {
 	public Log4jJdbcConnectionSource(DataSource dataSource){
 		this.dataSource = dataSource;
 	}
+	/** Gets the connection. */
 	
 	@Override
 	public Connection getConnection() throws SQLException {

@@ -4,6 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 
+/**
+ * <p>Utility class for Log4j operations.</p>
+ *
+ * @author <a href="https://github.com/loong10k">Loong Wan</a>
+ * @since 1.0.0
+ */
 public class Log4jUtils {
 
 	private Logger logger;
@@ -11,10 +17,20 @@ public class Log4jUtils {
 	private Log4jUtils(String loggerName) {
 		logger = LoggerFactory.getLogger(loggerName);
 	}
+	/**
+	 * <p>Instance.</p>
+	 * @param marker the marker
+	 * @return the static  log4j utils
+	 */
 	
 	public static Log4jUtils instance(Marker marker) {
 		return new Log4jUtils(marker.getName());
 	}
+	/**
+	 * <p>Instance.</p>
+	 * @param loggerName the logger name
+	 * @return the static  log4j utils
+	 */
 	
 	public static Log4jUtils instance(String loggerName) {
 		return new Log4jUtils(loggerName);
